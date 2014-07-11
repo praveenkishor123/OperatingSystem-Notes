@@ -1,0 +1,86 @@
+Netwide Assembler
+
+The Netwide Assembler (NASM) is an assembler and disassembler for the Intel x86 architecture. 
+It can be used to write 16-bit, 32-bit (IA-32) and 64-bit (x86-64) programs. 
+NASM is considered to be one of the most popular assemblers for Linux.
+
+NASM was originally written by Simon Tatham with assistance from Julian Hall and is currently maintained by a small team led by H. Peter Anvin. 
+It is available as free software under the terms of the simplified (2-clause) BSD license.
+
+
+NASM can output several binary formats including COFF, Portable Executable, a.out, ELF, Mach-O and .bin (binary disk image, used for compiling operating systems), though position-independent code is only supported for ELF object files. 
+
+NASM also has its own binary format called RDOFF.
+
+The variety of output formats allows programs to be retargeted to virtually any x86 operating system. 
+In addition, NASM can create flat binary files, usable in writing boot loaders, ROM images, and in various facets of OS development. 
+
+NASM can run on non-x86 platforms, such as SPARC and PowerPC, though it cannot generate programs usable by those machines.
+
+NASM uses a variation of Intel assembly syntax instead of AT&T syntax. 
+It also avoids features such as automatic generation of segment overrides (and the related ASSUME directive) used by MASM and compatible assemblers.
+
+
+
+This is a Hello world program for the DOS operating system:-
+
+section .text
+org 0x100
+	mov	ah, 0x9
+	mov	dx, hello
+	int	0x21
+ 
+	mov	ax, 0x4c00
+	int	0x21
+ 
+section .data
+hello:	db 'Hello, world!', 13, 10, '$'
+
+
+
+
+
+An example of a similar program for Microsoft Windows:-
+
+global _main
+extern _MessageBoxA@16
+extern _ExitProcess@4
+ 
+section code use32 class=code
+_main:
+	push	dword 0      ; UINT uType = MB_OK
+	push	dword title  ; LPCSTR lpCaption
+	push	dword banner ; LPCSTR lpText
+	push	dword 0      ; HWND hWnd = NULL
+	call	_MessageBoxA@16
+ 
+	push	dword 0      ; UINT uExitCode
+	call	_ExitProcess@4
+ 
+section data use32 class=data
+	banner:	db 'Hello, world!', 0
+	title:	db 'Hello', 0
+
+
+
+
+An equivalent program for Linux:-
+
+global _start
+ 
+section .text
+_start:
+	mov	eax, 4 ; write
+	mov	ebx, 1 ; stdout
+	mov	ecx, msg
+	mov	edx, msg.len
+	int	0x80   ; write(stdout, msg, strlen(msg));
+ 
+	mov	eax, 1 ; exit
+	mov	ebx, 0
+	int	0x80   ; exit(0)
+ 
+section .data
+msg:	db	"Hello, world!", 10
+.len:	equ	$ - msg
+
