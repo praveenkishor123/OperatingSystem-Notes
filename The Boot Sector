@@ -10,4 +10,31 @@ At a DOS (or Windows) command prompt type debug.
 This will leave you with just a hyphen as a prompt.  If you enter letter ‘d’ as a command and press Enter, it will show you a portion of the contents of RAM.  Typing the question mark as a command will give you a list of all the available commands in DEBUG.  (Be very careful when using the DEBUG utility.  This utility can be used to overwrite data on any disk drive, possibly causing loss of data.)
 
 
+Place a freshly formatted disk in the A: drive.  To load the Boot Record off your floppy disk, type the following command.
+
+-l 0 0 0 1
+
+(The first character is the letter ‘l’, not the number ‘1’.)  This command loads sectors off a disk into a portion of RAM.  The 4 numbers after the ‘l’ represent in order, the beginning address where you want the data loaded, the drive number (0 for first floppy driver), the first sector on the disk to load, and how many sectors to load.  Typing this command will load the first sector of the floppy into memory starting at address 0.
+
+Now that we have the Boot Record loaded into memory, we want to view its contents.  Type the following command.
+
+-d 0
+
+What you see are 8 lines that represent the first 128 (0x80 in hex) bytes in the floppy’s Boot Record.  The results (for my floppy disk) are the following.
+
+0AF6:0000  EB 3C 90 4D 53 44 4F 53-35 2E 30 00 02 01 01 00   .<.MSDOS5.0.....
+0AF6:0010  02 E0 00 40 0B F0 09 00-12 00 02 00 00 00 00 00   ...@............
+0AF6:0020  00 00 00 00 00 00 29 F6-63 30 88 4E 4F 20 4E 41   ......).c0.NO NA
+0AF6:0030  4D 45 20 20 20 20 46 41-54 31 32 20 20 20 33 C9   ME    FAT12   3.
+0AF6:0040  8E D1 BC F0 7B 8E D9 B8-00 20 8E C0 FC BD 00 7C   ....{.... .....|
+0AF6:0050  38 4E 24 7D 24 8B C1 99-E8 3C 01 72 1C 83 EB 3A   8N$}$....<.r...:
+0AF6:0060  66 A1 1C 7C 26 66 3B 07-26 8A 57 FC 75 06 80 CA   f..|&f;.&.W.u...
+0AF6:0070  02 88 56 02 80 C3 10 73-EB 33 C9 8A 46 10 98 F7   ..V....s.3..F...
+
+
+
+At first glance, this doesn’t tell me much.  I can see that it looks like this is a MS-DOS 5.0 disk with no name and a FAT12 file system.  The numbers in the far left column show the memory addresses in RAM.  The hexadecimal numbers in the middle show all the bytes in this portion of memory, and the column on the right shows the ASCII characters that the hex bytes represent (a period is shown if the byte does not translate to any visible character).  Some of the bytes you see in this portion of the Boot Record are parts of instructions in the boot loader, and some of them hold information about the disk such as the number of bytes per sector, the number of sectors per track, etc…
+
+
+
 
