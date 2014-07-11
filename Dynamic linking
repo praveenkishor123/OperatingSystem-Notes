@@ -1,0 +1,19 @@
+Many operating system environments allow dynamic linking, that is the postponing of the resolving of some undefined symbols until a program is run. 
+That means that the executable code still contains undefined symbols, plus a list of objects or libraries that will provide definitions for these. 
+Loading the program will load these objects/libraries as well, and perform a final linking. 
+
+Dynamic linking needs no linker.
+
+
+This approach offers two advantages:-
+
+Often-used libraries (for example the standard system libraries) need to be stored in only one location, not duplicated in every single binary.
+If a bug in a library function is corrected by replacing the library, all programs using it dynamically will benefit from the correction after restarting them. 
+Programs that included this function by static linking would have to be re-linked first.
+
+
+There are also disadvantages:-
+
+Known on the Windows platform as "DLL Hell", an incompatible updated library will break executables that depended on the behavior of the previous version of the library.
+A program, together with the libraries it uses, might be certified (e.g. as to correctness, documentation requirements, or performance) as a package, but not if components can be replaced. (This also argues against automatic OS updates in critical systems; in both cases, the OS and libraries form part of a qualified environment.)
+
