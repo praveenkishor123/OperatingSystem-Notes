@@ -1,0 +1,13 @@
+The Boot Sector :-
+
+When the computer boots from a floppy, BIOS (Basic Input/Output System) reads the disk and loads the first sector into memory at address 0000:7C00. This first sector is called the DOS Boot Record (DBR). BIOS jumps to the address 0x7C00 and begins executing instructions there. It is these instructions (the “boot loader”) that will load the operating system (OS) into memory and begin the OS’s boot process.
+
+
+The first thing to do is to take a look inside the Boot Record.  The DOS utility DEBUG is a widely available tool that can be used to view the contents of memory and disks.  We’ll use DEBUG to look at a floppy disk’s Boot Record.
+
+At a DOS (or Windows) command prompt type debug.  
+
+This will leave you with just a hyphen as a prompt.  If you enter letter ‘d’ as a command and press Enter, it will show you a portion of the contents of RAM.  Typing the question mark as a command will give you a list of all the available commands in DEBUG.  (Be very careful when using the DEBUG utility.  This utility can be used to overwrite data on any disk drive, possibly causing loss of data.)
+
+
+
