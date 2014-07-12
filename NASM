@@ -84,3 +84,12 @@ section .data
 msg:	db	"Hello, world!", 10
 .len:	equ	$ - msg
 
+
+
+
+The Loader
+There is a small assembly ﬁle that holds the entry point to the kernel. The
+loader code goes in the src directory contains some code to make the kernel
+multiboot compliant, which allows you to boot the kernel with any multiboot
+compliant bootloader such as GRUB.
+
